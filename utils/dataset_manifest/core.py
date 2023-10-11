@@ -328,7 +328,7 @@ class _Index:
 
     def create(self, manifest, *, skip):
         assert os.path.exists(manifest), 'A manifest file not exists, index cannot be created'
-        with open(manifest, 'r+') as manifest_file:
+        with open(manifest, 'r') as manifest_file:
             while skip:
                 manifest_file.readline()
                 skip -= 1

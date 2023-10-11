@@ -1029,15 +1029,18 @@ def _create_thread(
                 else:
                     manifest.init_index()
                 counter = itertools.count()
+                related_images = {}
                 for _, chunk_frames in itertools.groupby(extractor.frame_range, lambda x: next(counter) // db_data.chunk_size):
                     chunk_paths = [(extractor.get_path(i), i) for i in chunk_frames]
                     img_sizes = []
 
                     for chunk_path, frame_id in chunk_paths:
                         properties = manifest[manifest_index(frame_id)]
+                        file_name = f"{properties['name']}{properties['extension']}"
+                        related_images[file_name] = properties.get('meta', {}).get('related_images', [])
 
                         # check mapping
-                        if not chunk_path.endswith(f"{properties['name']}{properties['extension']}"):
+                        if not chunk_path.endswith(file_name):
                             raise Exception('Incorrect file mapping to manifest content')
 
                         if db_task.dimension == models.DimensionType.DIM_2D and (
