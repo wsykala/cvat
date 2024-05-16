@@ -18,7 +18,7 @@ def manually_remove_outdated_relations(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("engine", "0075_annotationguide_is_public"),
+        ("engine", "0076_alter_relatedfile_unique_together"),
     ]
 
     operations = [
